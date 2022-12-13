@@ -97,7 +97,7 @@ fun shortestPaths(graph: Graph, constraint: (height: Int, neighbourHeight: Int) 
     }
 }
 
-fun shortestPathStepsTo(node: Pair<Int, Int>, graph: Graph): List<Pair<Int, Int>> {
+fun shortestPathTo(node: Pair<Int, Int>, graph: Graph): List<Pair<Int, Int>> {
     var currentNode: Pair<Int, Int>? = node
     val path = mutableListOf<Pair<Int, Int>>()
     while (currentNode != null) {
@@ -112,7 +112,7 @@ fun main() {
     fun part1(input: List<String>): Int {
         val graph = createGraph(input)
         shortestPaths(graph) { height, neighbourHeight -> neighbourHeight - height <= 1 }
-        return shortestPathStepsTo(graph.endNode, graph).size - 1
+        return shortestPathTo(graph.endNode, graph).size - 1
     }
 
     fun part2(input: List<String>): Int {
@@ -122,7 +122,7 @@ fun main() {
         shortestPaths(graph) { height, neighbourHeight -> neighbourHeight - height >= -1 }
         val paths = mutableListOf<List<Pair<Int, Int>>>()
         graph.heights.forEachIndexed { i, heights ->
-            heights.forEachIndexed { j, height -> if (height == 1) paths.add(shortestPathStepsTo(i to j, graph)) }
+            heights.forEachIndexed { j, height -> if (height == 1) paths.add(shortestPathTo(i to j, graph)) }
         }
         return paths.filter { it.last() == graph.endNode }.minOf { it.size - 1 }
     }
